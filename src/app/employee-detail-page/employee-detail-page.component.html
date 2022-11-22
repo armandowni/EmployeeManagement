@@ -1,0 +1,25 @@
+<div class="py-5">
+  <div class="card p-5">
+    <span class="fs-2 fw-bold">Employee Detail</span>
+    <div class="row row-cols-2 gx-5" id="form">
+      <input class="col" type="text" placeholder="Username" />
+      <input class="col" type="text" placeholder="First Name" />
+      <input class="col" type="text" placeholder="Last Name" />
+      <input class="col" type="email" placeholder="Email" />
+      <input class="col" type="datetime" placeholder="Date of Birth" />
+      <input class="col" type="text" placeholder="Salary" />
+      <input class="col" type="text" placeholder="Status" />
+      <select class="col">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <input class="col" type="text" placeholder="description" />
+    </div>
+    <div class="d-flex gap-3">
+      <button (click)="onCancelorOk()">cancel</button>
+      <button (click)="onAdd()">Add</button>
+    </div>
+  </div>
+</div>
