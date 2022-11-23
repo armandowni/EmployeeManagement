@@ -1,35 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { dummyData, Employee, Group } from 'src/data';
 
 @Component({
   selector: 'app-employee-detail-page',
   templateUrl: './employee-detail-page.component.html',
-  styleUrls: ['./employee-detail-page.component.css']
+  styleUrls: ['./employee-detail-page.component.css'],
 })
 export class EmployeeDetailPageComponent implements OnInit {
+  id: any;
+  employee: any = null;
+  dataDummy: Employee[] = dummyData;
+  group = Group;
+  isDetail: Boolean | any;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private activeRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.activeRoute.paramMap.subscribe((params: ParamMap) => {
+      this.id = params?.get('id');
+    });
+
+    if (this.id === 'new') {
+      this.isDetail = false;
+    } else {
+      this.isDetail = true;
+      this.employee = dummyData.find((data) => data.id == this.id);
+      // console.log(this.employee);
+    }
   }
 
-  onAdd(){
+  onAdd(data: any) {
+    // console.log(this.dataDummy.push(data));
+    console.log(data);
+
     // this.router.navigate(['/employeeListPage']);
   }
 
-  onCancelorOk(){
+  onCancelorOk() {
     this.router.navigate(['/employeeListPage']);
   }
-  // “employee”:{
-  //   “username”: string,
-  //   “firstName”:string,
-  //   “lastName”:string,
-  //   “email”:string,
-  //   “birthDate”:datetime,
-  //   “basicSalary”:double,
-  //   “status”:string,
-  //   “group”:string,
-  //   “description”:datetime
-  //   }
-
 }

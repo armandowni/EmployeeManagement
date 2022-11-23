@@ -1,59 +1,52 @@
-<div class="py-5">
-  <div class="card">
+<div class="py-5 container">
+  <div class="card min-h-100">
     <div class="d-flex justify-content-between px-3 align-items-center">
       <span class="fs-2 fw-bold">List Employee</span>
       <i class="bi bi-plus fs-2" role="button" (click)="addEmployee()"></i>
     </div>
-    <input class="mx-5 w-10" type="text" placeholder="Search Employee by Name">
+    <input
+      class="mx-3 w-50"
+      type="text"
+      placeholder="Search Employee by Name..."
+    />
     <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">action</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Basic Salary</th>
+          <th scope="col">Group</th>
+          <th scope="col"></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td class="d-flex gap-3">
-            <i
-              class="bi bi-person-badge"
-              role="button"
-              (click)="editEmployee({ id: 1 })"
-            ></i>
-            <i class="bi bi-trash" role="button" data-bs-toggle="modal" data-bs-target="#myModal"></i>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td class="d-flex gap-3">
-            <i
-              class="bi bi-person-badge"
-              role="button"
-              (click)="editEmployee({ id: 1 })"
-            ></i>
-            <i class="bi bi-trash" role="button" data-bs-toggle="modal" data-bs-target="#myModal"></i>
-          </td>
-        </tr>
-
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td class="d-flex gap-3">
-            <i
-              class="bi bi-person-badge"
-              role="button"
-              (click)="editEmployee({ id: 1 })"
-            ></i>
-            <i class="bi bi-trash" role="button" data-bs-toggle="modal" data-bs-target="#myModal"></i>
-          </td>
-        </tr>
+      <tbody class="h-10">
+        <ng-template ngFor let-item [ngForOf]="data" let-i="index">
+          <tr>
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.firstName }}</td>
+            <td>{{ item.lastName }}</td>
+            <td>{{ item.email }}</td>
+            <td>
+              {{ item.basicSalary | currency: "IDR":"symbol-narrow":"4.2-2" }}
+            </td>
+            <td>{{ item.group }}</td>
+            <td class="d-flex gap-3">
+              <i
+                class="bi bi-person-badge"
+                role="button"
+                (click)="editEmployee(item)"
+              ></i>
+              <i
+                class="bi bi-trash"
+                role="button"
+                data-bs-toggle="modal"
+                data-bs-target="#myModal"
+              ></i>
+            </td>
+          </tr>
+        </ng-template>
       </tbody>
     </table>
     <nav
@@ -61,34 +54,51 @@
       class="d-flex justify-content-end px-1"
     >
       <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item">
+          <a class="page-link" href="javascript:void(0)" (click)="onPrevious()"
+            >Previous</a
+          >
+        </li>
+        <ng-template ngFor let-item [ngForOf]="totalPage" let-i="index">
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="javascript:void(0)"
+              (click)="onChangePage(item)"
+              >{{ item + 1 }}</a
+            >
+          </li>
+        </ng-template>
+        <li class="page-item">
+          <a class="page-link" href="javascript:void(0)" (click)="onNext()"
+            >Next</a
+          >
+        </li>
       </ul>
     </nav>
   </div>
   <div class="modal" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
-  
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
         </div>
-  
+
         <!-- Modal body -->
-        <div class="modal-body">
-          Modal body..
-        </div>
-  
+        <div class="modal-body">Modal body..</div>
+
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Close
+          </button>
         </div>
-  
       </div>
     </div>
   </div>

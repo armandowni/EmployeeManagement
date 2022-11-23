@@ -6,19 +6,17 @@ import { AppComponent } from './app.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { EmployeeListComponentComponent } from './employee-list-component/employee-list-component.component';
 import { EmployeeDetailPageComponent } from './employee-detail-page/employee-detail-page.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponentComponent,
     EmployeeListComponentComponent,
-    EmployeeDetailPageComponent
+    EmployeeDetailPageComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
