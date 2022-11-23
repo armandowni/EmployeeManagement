@@ -1,82 +1,149 @@
 <div class="py-5 container">
   <div class="card p-5">
     <span class="fs-2 fw-bold">Employee Detail</span>
-    <div class="row row-cols-2 py-3" id="form">
-      <div class="col">
-        <input
-          type="text"
-          placeholder="Username"
-          [(ngModel)]="employee.username"
-        />
-      </div>
-      <div class="col">
-        <input
-          type="text"
-          placeholder="First Name"
-          [(ngModel)]="employee.firstName"
-        />
-      </div>
-      <div class="col">
-        <input
-          type="text"
-          placeholder="Last Name"
-          [(ngModel)]="employee.lastName"
-        />
-      </div>
-      <div class="col">
-        <input type="email" placeholder="Email" [(ngModel)]="employee.email" />
-      </div>
-      <div class="col">
-        <input
-          type="date"
-          placeholder="Date of Birth"
-          [(ngModel)]="employee.birthDate"
-        />
-      </div>
-      <div class="col">
-        <input
-          type="number"
-          placeholder="Salary"
-          [(ngModel)]="employee.basicSalary"
-        />
-      </div>
-      <div class="col">
-        <select [(ngModel)]="employee.status" >
-          <option value="0">Select Status</option>
-          <option value="Aktif">Aktif</option>
-          <option value="Tidak Aktif">Tidak Aktif</option>
-        </select>
-      </div>
-      <div class="col">
-        <select [(ngModel)]="employee.group">
-          <option value="0">Select Group</option>
-          <ng-template ngFor let-item [ngForOf]="group" let-i="index">
-            <option [value]="item">{{ item }}</option>
-          </ng-template>
-        </select>
-      </div>
-      <div class="col">
-        <textarea
-          type="text"
-          placeholder="description"
-          [(ngModel)]="employee.description"
-        ></textarea>
+    <div *ngIf="message.length > 0" class="w-100">
+      <div class="alert alert-danger" role="alert">
+        {{ message }}
       </div>
     </div>
-    <div
-      *ngIf="!isDetail; else elseBlock"
-      class="d-flex justify-content-between gap-3 py-3"
-    >
-      <button (click)="onCancelorOk()" class="w-100">cancel</button>
-      <button (click)="onAdd(employee)" class="w-100">Add</button>
-    </div>
-    <ng-template #elseBlock
-      ><div class="d-flex justify-content-between gap-3 py-3">
-        <div class="w-100"></div>
-        <button (click)="onCancelorOk()" class="w-100">OK</button>
-        <!-- <button (click)="onAdd()">Add</button> -->
-      </div></ng-template
-    >
-    <div class="d-flex gap-3"></div>
+    <form #registerForm="ngForm" (ngSubmit)="onAdd(registerForm.value)">
+      <div class="row row-cols-2 py-3" id="form">
+        <div class="col">
+          <input
+            type="text"
+            name="username"
+            [disabled]="isDetail"
+            placeholder="Username"
+            [ngModel]="employee?.username"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="text"
+            name="firstName"
+            [disabled]="isDetail"
+            placeholder="First Name"
+            [ngModel]="employee?.firstName"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="text"
+            name="lastName"
+            [disabled]="isDetail"
+            placeholder="Last Name"
+            [ngModel]="employee?.lastName"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="email"
+            name="email"
+            [disabled]="isDetail"
+            placeholder="Email"
+            [ngModel]="employee?.email"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="date"
+            [disabled]="isDetail"
+            name="birthDate"
+            placeholder="Date of Birth"
+            [ngModel]="employee?.birthDate"
+          />
+        </div>
+        <div class="col">
+          <div
+            class="d-flex align-items-center"
+            style="border-radius: 10px; border: 1px solid black"
+          >
+            <span class="px-3">Rp</span>
+            <input
+              [disabled]="isDetail"
+              type="text"
+              name="basicSalary"
+              placeholder="Salary"
+              (keyup)="onChangeCurrency($event)"
+              [ngModel]="
+                !employee?.basicSalary
+                  ? null
+                  : changeCurrency(employee?.basicSalary.toString())
+              "
+              style="border-radius: 0px; border: 0px"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <select
+            [ngModel]="employee?.status || 0"
+            name="status"
+            [disabled]="isDetail"
+          >
+            <option value="0">Select Status</option>
+            <option value="Aktif">Aktif</option>
+            <option value="Tidak Aktif">Tidak Aktif</option>
+          </select>
+        </div>
+        <div class="col">
+          <div class="dropdown w-100">
+            <button
+              class="btn dropdown-toggle d-flex align-items-center justify-content-between"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style="border: 1px solid black; border-radius: 10px"
+            >
+              {{ employee.group.length == 0 ? "Select Group" : employee.group }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li class="px-3">
+                <input type="text" (keyup)="onSearchGroup($event)" placeholder="Search Group"/>
+              </li>
+              <ng-template ngFor let-item [ngForOf]="group" let-i="index">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    (click)="onSelectGroup(item)"
+                    >{{ item }}</a
+                  >
+                </li>
+              </ng-template>
+            </ul>
+          </div>
+          <!-- <select
+            [ngModel]="employee?.group || 0"
+            name="group"
+            [disabled]="isDetail"
+          >
+            <option value="0">Select Group</option>
+          </select> -->
+        </div>
+        <div class="col">
+          <textarea
+            type="text"
+            name="description"
+            placeholder="description"
+            [ngModel]="employee?.description"
+            [disabled]="isDetail"
+          ></textarea>
+        </div>
+      </div>
+      <div
+        *ngIf="!isDetail; else elseBlock"
+        class="d-flex justify-content-between gap-3 py-3"
+      >
+        <button (click)="onCancelorOk()" class="w-100">Cancel</button>
+        <button type="submit" class="w-100">Save</button>
+      </div>
+      <ng-template #elseBlock
+        ><div class="d-flex justify-content-between gap-3 py-3">
+          <div class="w-100"></div>
+          <button (click)="onCancelorOk()" class="w-100">OK</button>
+        </div></ng-template
+      >
+    </form>
   </div>
 </div>

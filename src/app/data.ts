@@ -1,3 +1,21 @@
+export interface Employee {
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  birthDate: string;
+  basicSalary: number;
+  status: string;
+  group: string;
+  description: string;
+}
+export interface user {
+  id: number;
+  email: string;
+  password: string;
+}
+
 export const dummyData: Employee[] = [
   {
     id: 1,
@@ -1256,17 +1274,58 @@ export const dummyData: Employee[] = [
   },
 ];
 
-export interface Employee {
-  id: number;
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  birthDate: string;
-  basicSalary: number;
-  status: string;
-  group: string;
-  description: string;
-}
+export const dummyUsers: user[] = [
+  { id: 1, email: 'test@mail.com', password: 'admin123' },
+];
 
-export const Group = ['Marketing', 'IT Divisi', 'Sales'];
+export const Group = [
+  'Marketing',
+  'Sales',
+  'Accounting',
+  'Finance',
+  'Executive Officers',
+  'Security',
+  'Senior Frontend',
+  'Senior Backend',
+  'Junior Frontend',
+  'Junior Backend',
+];
+
+export const addUserData = (value: any) => {
+  value.id = dummyUsers.length + 1;
+  dummyUsers.push(value);
+};
+
+export const inputData = (value: any) => {
+  value.id = dummyData.length + 1;
+  dummyData.push(value);
+};
+
+export const deleteData = (id: number) => {
+  const indexData = dummyData.findIndex((data) => data.id == id);
+  dummyData.splice(indexData, 1);
+
+  return dummyData;
+};
+
+const re =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+export const isEmail = (email: string) => {
+  return email.match(re);
+};
+
+export const checkDate = (date: Date) => {
+  const today = new Date();
+  date = new Date(date);
+
+  if (today < date) return true;
+  return false;
+};
+
+export const currencyChange = (value: string) => {
+  return parseFloat(value.replace(/,/g, ''))
+    .toFixed(2)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};

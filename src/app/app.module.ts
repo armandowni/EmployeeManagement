@@ -7,6 +7,7 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { EmployeeListComponentComponent } from './employee-list-component/employee-list-component.component';
 import { EmployeeDetailPageComponent } from './employee-detail-page/employee-detail-page.component';
 import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
     LoginComponentComponent,
     EmployeeListComponentComponent,
     EmployeeDetailPageComponent,
+    RegisterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
