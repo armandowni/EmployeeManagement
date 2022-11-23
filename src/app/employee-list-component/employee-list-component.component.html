@@ -23,7 +23,10 @@
           <option [value]="item">{{ item }}</option>
         </ng-template>
       </select>
-      <button type="submit" style="border: 0px; background: transparent; width: max-content;">
+      <button
+        type="submit"
+        style="border: 0px; background: transparent; width: max-content"
+      >
         <i class="bi bi-search"></i>
       </button>
     </form>
@@ -35,7 +38,21 @@
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Basic Salary</th>
+          <th
+            class="align-items-center"
+            style="cursor: pointer"
+            scope="col"
+            (click)="onSort(sortBasicSalary.name, sortBasicSalary.type)"
+          >
+            <span>Basic Salary</span>
+            <i
+              [class]="
+                sortBasicSalary.type == 'ASC'
+                  ? 'bi bi-chevron-down'
+                  : 'bi bi-chevron-up'
+              "
+            ></i>
+          </th>
           <th scope="col">Group</th>
           <th scope="col"></th>
         </tr>

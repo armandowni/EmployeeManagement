@@ -17,6 +17,10 @@ export class EmployeeListComponentComponent implements OnInit {
   data: Employee[] = [];
   dataEmployee: Employee | any;
   limits = [5, 10, 25, 50];
+  sortBasicSalary: { name: string; type: 'ASC' | 'DESC' } = {
+    name: 'basicSalary',
+    type: 'ASC',
+  };
 
   constructor(private router: Router) {}
 
@@ -100,6 +104,35 @@ export class EmployeeListComponentComponent implements OnInit {
       (employee) =>
         employee.username.includes(data.username) &&
         employee.group.includes(data.group)
+    );
+    this.count = this.dataDummy.length;
+    this.pageIndex = 1;
+    this.limit = 25;
+    this.totalPage = Array.from(
+      Array(Math.ceil(this.count / this.limit)).keys()
+    );
+    this.data = this.getData(
+      this.dataDummy,
+      this.limit * (this.pageIndex - 1),
+      this.limit * this.pageIndex
+    );
+  }
+
+  onSort(name: string, type: 'ASC' | 'DESC') {
+    // console.log(data);
+    if (type == 'ASC') {
+      type = 'DESC';
+      this.sortBasicSalary = { name: 'basicSalary', type };
+    } else {
+      type = 'ASC';
+      this.sortBasicSalary = { name: 'basicSalary', type };
+    }
+    const tempData = dummyData;
+
+    this.dataDummy = tempData.sort((employeeA: any, employeeB: any) =>
+      type == 'ASC'
+        ? employeeA[name] - employeeB[name]
+        : employeeB[name] - employeeA[name]
     );
     this.count = this.dataDummy.length;
     this.pageIndex = 1;

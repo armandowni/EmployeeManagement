@@ -18,8 +18,15 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        if (val.url === '/login') this.isLoginPage = true;
+        console.log(val.url);
+        if (val.url === '/login' || val.url === '/') this.isLoginPage = true;
+        else {
+          this.isLoginPage = false;
+        }
       }
     });
+  }
+  onLogout() {
+    this.router.navigate(['/login']);
   }
 }

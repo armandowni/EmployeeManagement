@@ -8,6 +8,30 @@
     style="z-index: 10"
   >
     <span class="fw-bolder fs-1">Employee Management App</span>
+    <div *ngIf="!isLoginPage">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="bi bi-list"></i>
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <a
+              class="dropdown-item"
+              href="javascript:void(0)"
+              (click)="onLogout()"
+              >Logout</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div
     [class]="!isLoginPage ? 'py-5' : 'py-0'"
